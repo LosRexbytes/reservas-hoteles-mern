@@ -1,0 +1,92 @@
+/* Estilo general */
+.verification-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #9daea5;
+}
+
+.verification-box {
+  background-color: #d9dfd9;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+.check-icon {
+  width: 50px;
+  height: 50px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.input-code {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.btn-confirm {
+  background-color: #3a4f59;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.btn-confirm:hover {
+  background-color: #2d3b43;
+}
+
+.btn-back {
+  background-color: #ccc;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.btn-back:hover {
+  background-color: #aaa;
+}
+
+.resend-link {
+  display: block;
+  margin-top: 20px;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.resend-link:hover {
+  text-decoration: underline;
+}

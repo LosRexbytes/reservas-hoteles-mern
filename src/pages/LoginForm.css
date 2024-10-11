@@ -1,0 +1,106 @@
+/* Contenedor principal que ocupa toda la pantalla */
+.App-container {
+  background-image: url('../pages/assets/login2.jpg'); /* Ruta de la imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Evitar que la imagen se repita */
+  background-attachment: fixed; /* Hacer que la imagen de fondo esté fija */
+  height: 100vh; /* Altura de toda la pantalla */
+  width: 100vw;  /* Ancho de toda la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja del formulario */
+.App-box {
+  background: rgba(255, 255, 255, 0.3); /* Fondo semi-transparente */
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%; /* Ancho del 90% para pantallas pequeñas */
+  max-width: 450px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado horizontal */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Título del formulario */
+.App-box h1 {
+  color: rgb(8, 57, 68);
+  font-size: 3em;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif; /* Fuente más legible */
+}
+
+/* Estilos de los campos de entrada */
+form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordes ligeros */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo semi-transparente */
+  font-size: 1em;
+}
+
+/* Estilos del botón de login */
+form button {
+  padding: 10px;
+  width: 100%;
+  background-color: #8AA29E; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Cambio de color al pasar el cursor sobre el botón */
+form button:hover {
+  background-color: #6D8F89; /* Oscurece el color al hacer hover */
+}
+
+/* Estilo para los mensajes de error */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+/* Estilo para los mensajes de éxito */
+.success-message {
+  color: green;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+/* Extras: checkbox y enlaces */
+.extras {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: white;
+  font-size: 0.9em;
+}
+
+/* Estilos del enlace "Olvidaste tu contraseña" */
+.extras a {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Cambio de color al pasar sobre el enlace */
+.extras a:hover {
+  color: #FFD700; /* Color dorado al pasar el cursor */
+}
+
+/* Estilos del checkbox */
+.extras label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre el checkbox y el texto */
+}
