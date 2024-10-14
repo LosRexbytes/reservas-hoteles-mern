@@ -80,6 +80,7 @@ const RegisterForm = () => {
         setErrorMessage('');
         localStorage.setItem('token', response.data.token);
       } catch (error) {
+        console.log("QUE FUE?");
         setErrorMessage(error.response?.data?.message || 'Error al registrar');
         setSuccessMessage('');
       }

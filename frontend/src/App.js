@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import RegisterForm from './pages/RegisterForm';
 import LoginForm from './pages/LoginForm';
 import PasswordReset from './pages/PasswordReset';
@@ -11,8 +11,11 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Ruta predeterminada ("/") que carga el formulario de login */}
-          <Route path="/" element={
+          {/* Ruta predeterminada ("/") que redirige a "/login" */}
+          <Route path="/" element={<Navigate to="/login" />} />
+
+          {/* Ruta para el formulario de login */}
+          <Route path="/login" element={
             <div className="container">
               <div className="login-section">
                 <LoginForm />
