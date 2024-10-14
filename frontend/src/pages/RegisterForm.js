@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; // Asegúrate de importar axios
 import './RegisterForm.css';
 
-const RegisterForm = () => {
+const RegisterForm = () => { // Cambié 'App' a 'RegisterForm' para mayor claridad
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -15,8 +15,7 @@ const RegisterForm = () => {
     passwordMatch: ''
   });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -73,17 +72,18 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (errors.password.length === 0 && errors.passwordMatch === '') {
-      try {
-        const response = await axios.post('http://localhost:5000/auth/register', formData);
-        setSuccessMessage('Registro exitoso');
-        setErrorMessage('');
-        localStorage.setItem('token', response.data.token);
-      } catch (error) {
-        console.log("QUE FUE?");
-        setErrorMessage(error.response?.data?.message || 'Error al registrar');
-        setSuccessMessage('');
-      }
+    const userData = {
+      name: formData.nombre, // Cambia esto si tu modelo lo requiere
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3001/register', userData);
+      setMessage('Usuario registrado exitosamente');
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error.response.data);
+      setMessage('Error al registrar el usuario');
     }
   };
 
@@ -91,8 +91,7 @@ const RegisterForm = () => {
     <div className="App-container">
       <div className="App-box">
         <h1>REGISTRARSE</h1>
-        {successMessage && <p className="success-message">{successMessage}</p>}
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {message && <div>{message}</div>} {/* Mensaje de éxito o error */}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -100,7 +99,6 @@ const RegisterForm = () => {
             placeholder="Nombre"
             value={formData.nombre}
             onChange={handleChange}
-            required
           />
           <input
             type="email"
@@ -108,7 +106,6 @@ const RegisterForm = () => {
             placeholder="Correo"
             value={formData.email}
             onChange={handleChange}
-            required
           />
           <input
             type="password"
@@ -116,10 +113,9 @@ const RegisterForm = () => {
             placeholder="Contraseña"
             value={formData.password}
             onChange={handleChange}
-            required
           />
           {errors.password.length > 0 && (
-            <div className="error-message">
+            <div style={{ color: 'red' }}>
               {errors.password.map((error, index) => (
                 <p key={index}>{error}</p>
               ))}
@@ -131,10 +127,9 @@ const RegisterForm = () => {
             placeholder="Confirmar contraseña"
             value={formData.confirmPassword}
             onChange={handleChange}
-            required
           />
           {errors.passwordMatch && (
-            <div className="error-message">
+            <div style={{ color: 'red' }}>
               <p>{errors.passwordMatch}</p>
             </div>
           )}
@@ -145,4 +140,5 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default RegisterForm; // Asegúrate de exportar el componente correcto
+

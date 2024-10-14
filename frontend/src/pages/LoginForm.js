@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate para redirección
 
 const LoginForm = () => {
   const [usernameEmail, setUsernameEmail] = useState('');
@@ -8,24 +9,34 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  const navigate = useNavigate(); // Inicializar el hook para navegación
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', {
+      const response = await axios.post('http://localhost:3001/auth/login', {
         usernameEmail,
         password,
       });
-      localStorage.setItem('token', response.data.token);
       setSuccessMessage(`Bienvenido ${response.data.username}`);
       setErrorMessage('');
+
+      // Redirigir a la página de reservas
+      navigate('/reservas-form');
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message || 'Error desconocido');
+      } else if (error.request) {
+        setErrorMessage('No se recibió respuesta del servidor');
       } else {
-        setErrorMessage('Error de conexión con el servidor');
+        setErrorMessage('Error al configurar la solicitud: ' + error.message);
       }
       setSuccessMessage('');
     }
+  };
+
+  const handleForgotPassword = () => {
+    alert('Funcionalidad de recuperación de contraseña no implementada aún.');
   };
 
   return (
@@ -54,7 +65,9 @@ const LoginForm = () => {
             <label>
               <input type="checkbox" /> Guardar
             </label>
-            <a href="#">¿Olvidaste tu contraseña?</a>
+            <button type="button" onClick={handleForgotPassword}>
+              ¿Olvidaste tu contraseña?
+            </button>
           </div>
         </form>
       </div>

@@ -1,14 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../model/User');
+const User = require('../model/User'); // Asegúrate de que esta ruta sea correcta
 
 const router = express.Router();
 
 // Ruta para el registro de usuarios
 router.post('/register', async (req, res) => {
   try {
-    const { nombre, email, password } = req.body;
+    const { nombre, email, password } = req.body; // Cambié 'name' por 'nombre'
 
     // Validación básica
     if (!nombre || !email || !password) {
@@ -38,17 +37,13 @@ router.post('/register', async (req, res) => {
 
     // Crear un nuevo usuario
     const newUser = new User({
-      username: nombre,
+      username: nombre, // Asegúrate de que este campo esté en tu esquema
       email,
       password: hashedPassword
     });
 
     await newUser.save();
-
-    // Generar token JWT
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.status(201).json({ message: 'Usuario registrado exitosamente', token, userId: newUser._id });
+    res.status(201).json({ message: 'Usuario registrado exitosamente' });
   } catch (error) {
     console.error('Error en el registro:', error);
     res.status(500).json({ message: 'Error en el servidor' });
@@ -71,19 +66,17 @@ router.post('/login', async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Usuario no encontrado...' });
+      return res.status(400).json({ message: 'Usuario no encontrado' });
     }
 
     // Comparar la contraseña
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'contraseña incorrecta...' });
+      return res.status(400).json({ message: 'Contraseña incorrecta' });
     }
 
-    // Generar token JWT
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ message: 'Login exitoso', token, userId: user._id, username: user.username });
+    // Puedes agregar un token JWT aquí si lo deseas
+    res.json({ message: 'Login exitoso', username: user.username });
   } catch (error) {
     console.error('Error en el login:', error);
     res.status(500).json({ message: 'Error en el servidor' });
