@@ -15,14 +15,13 @@ const LoginForm = () => {
         usernameEmail,
         password,
       });
+      localStorage.setItem('token', response.data.token);
       setSuccessMessage(`Bienvenido ${response.data.username}`);
       setErrorMessage('');
     } catch (error) {
       if (error.response) {
-        // Error en el servidor (400, 500, etc.)
         setErrorMessage(error.response.data.message);
       } else {
-        // Otro tipo de error
         setErrorMessage('Error de conexión con el servidor');
       }
       setSuccessMessage('');

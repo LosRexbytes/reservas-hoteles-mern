@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Asegúrate de importar axios
+import axios from 'axios';
 import './RegisterForm.css';
 
-const App = () => {
+const RegisterForm = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -14,6 +14,9 @@ const App = () => {
     password: [],
     passwordMatch: ''
   });
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -72,10 +75,13 @@ const App = () => {
     e.preventDefault();
     if (errors.password.length === 0 && errors.passwordMatch === '') {
       try {
-        const response = await axios.post('http://localhost:5000/api/register', formData);
-        console.log(response.data); // Manejo de respuesta exitosa
+        const response = await axios.post('http://localhost:5000/auth/register', formData);
+        setSuccessMessage('Registro exitoso');
+        setErrorMessage('');
+        localStorage.setItem('token', response.data.token);
       } catch (error) {
-        console.error('Error al enviar el formulario:', error.response.data);
+        setErrorMessage(error.response?.data?.message || 'Error al registrar');
+        setSuccessMessage('');
       }
     }
   };
@@ -84,6 +90,8 @@ const App = () => {
     <div className="App-container">
       <div className="App-box">
         <h1>REGISTRARSE</h1>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -91,6 +99,7 @@ const App = () => {
             placeholder="Nombre"
             value={formData.nombre}
             onChange={handleChange}
+            required
           />
           <input
             type="email"
@@ -98,6 +107,7 @@ const App = () => {
             placeholder="Correo"
             value={formData.email}
             onChange={handleChange}
+            required
           />
           <input
             type="password"
@@ -105,9 +115,10 @@ const App = () => {
             placeholder="Contraseña"
             value={formData.password}
             onChange={handleChange}
+            required
           />
           {errors.password.length > 0 && (
-            <div style={{ color: 'red' }}>
+            <div className="error-message">
               {errors.password.map((error, index) => (
                 <p key={index}>{error}</p>
               ))}
@@ -119,9 +130,10 @@ const App = () => {
             placeholder="Confirmar contraseña"
             value={formData.confirmPassword}
             onChange={handleChange}
+            required
           />
           {errors.passwordMatch && (
-            <div style={{ color: 'red' }}>
+            <div className="error-message">
               <p>{errors.passwordMatch}</p>
             </div>
           )}
@@ -132,4 +144,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default RegisterForm;

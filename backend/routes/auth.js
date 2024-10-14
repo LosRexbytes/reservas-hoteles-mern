@@ -1,13 +1,14 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const User = require('../model/User'); // Asegúrate de que esta ruta sea correcta
+const jwt = require('jsonwebtoken');
+const User = require('../model/User');
 
 const router = express.Router();
 
 // Ruta para el registro de usuarios
 router.post('/register', async (req, res) => {
   try {
-    const { nombre, email, password } = req.body; // Cambié 'name' por 'nombre'
+    const { nombre, email, password } = req.body;
 
     // Validación básica
     if (!nombre || !email || !password) {
@@ -37,13 +38,17 @@ router.post('/register', async (req, res) => {
 
     // Crear un nuevo usuario
     const newUser = new User({
-      username: nombre, // Asegúrate de que este campo esté en tu esquema
+      username: nombre,
       email,
       password: hashedPassword
     });
 
     await newUser.save();
-    res.status(201).json({ message: 'Usuario registrado exitosamente' });
+
+    // Generar token JWT
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).json({ message: 'Usuario registrado exitosamente', token, userId: newUser._id });
   } catch (error) {
     console.error('Error en el registro:', error);
     res.status(500).json({ message: 'Error en el servidor' });
@@ -66,17 +71,19 @@ router.post('/login', async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Usuario no encontrado' });
+      return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
     // Comparar la contraseña
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Contraseña incorrecta' });
+      return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
-    // Puedes agregar un token JWT aquí si lo deseas
-    res.json({ message: 'Login exitoso', username: user.username });
+    // Generar token JWT
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ message: 'Login exitoso', token, userId: user._id, username: user.username });
   } catch (error) {
     console.error('Error en el login:', error);
     res.status(500).json({ message: 'Error en el servidor' });
