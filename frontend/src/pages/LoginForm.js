@@ -36,8 +36,12 @@ const LoginForm = () => {
   };
 
   const handleForgotPassword = () => {
-    alert('Funcionalidad de recuperación de contraseña no implementada aún.');
+    navigate('/reset-password');
   };
+
+  const handleForgoRegister = () => {
+    navigate('/register')
+  }
 
   return (
     <div className="App-container">
@@ -65,9 +69,14 @@ const LoginForm = () => {
             <label>
               <input type="checkbox" /> Guardar
             </label>
-            <button type="button" onClick={handleForgotPassword}>
-              ¿Olvidaste tu contraseña?
-            </button>
+            <label 
+              className="/reset-password" 
+              onClick={handleForgotPassword}> ¿Olvidaste tu contraseña?, Recuperar
+            </label>
+            <label 
+              className="/register" 
+              onClick={handleForgoRegister}> ¿No tienes cuenta?, REGISTRARSE
+            </label>
           </div>
         </form>
       </div>

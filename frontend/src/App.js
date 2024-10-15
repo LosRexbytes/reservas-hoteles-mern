@@ -5,6 +5,7 @@ import RegisterForm from './pages/RegisterForm';  // Ruta hacia el formulario de
 import PasswordReset from './pages/PasswordReset'; // Ruta hacia el formulario de restablecimiento de contraseña
 import VerificationCode from './pages/VerificationCode'; // Ruta hacia el formulario de verificación de código
 import ReservasForm from './pages/ReservasForm'; // Ruta hacia el formulario de reservas
+import Bienvenida from './pages/Bienvenida';
 import './App.css';  // Importa los estilos generales de la aplicación
 
 function App() {
@@ -12,24 +13,14 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          {/* Ruta predeterminada ("/") que carga la página de bienvenida */}
+          <Route path="/" element={<Bienvenida />} />
 
-          {/* Ruta predeterminada ("/") que carga el formulario de login */}
-          <Route path="/" element={
-            <div className="container">
-              <div className="login-section">
-                <LoginForm /> {/* Carga el formulario de inicio de sesión */}
-              </div>
-            </div>
-          } />
+          {/* Ruta para el formulario de inicio de sesión */}
+          <Route path="/login" element={<LoginForm />} />
 
           {/* Ruta para el formulario de registro */}
-          <Route path="/register" element={
-            <div className="container">
-              <div className="register-section">
-                <RegisterForm /> {/* Carga el formulario de registro */}
-              </div>
-            </div>
-          } />
+          <Route path="/register" element={<RegisterForm />} />
 
           {/* Ruta para el formulario de restablecimiento de contraseña */}
           <Route path="/reset-password" element={<PasswordReset />} />
@@ -38,14 +29,7 @@ function App() {
           <Route path="/verify-code" element={<VerificationCode />} />
 
           {/* Ruta para el formulario de reservas de hoteles */}
-          <Route path="/reservas-form" element={
-            <div className="container">
-              <div className="reservas-section">
-                <ReservasForm /> {/* Carga el formulario de reservas */}
-              </div>
-            </div>
-          } />
-
+          <Route path="/reservas-form" element={<ReservasForm />} />
         </Routes>
       </div>
     </Router>
