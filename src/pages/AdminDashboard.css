@@ -1,0 +1,294 @@
+.admin-dashboard {
+  display: flex;
+  background: url('./assets/bienvenid.jpg') no-repeat center center fixed; /* Cambia la ruta a tu imagen */
+  background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+  min-height: 100vh; /* Asegúrate de que cubra toda la altura de la pantalla */
+  position: relative; /* Añadido para el posicionamiento absoluto */
+}
+
+/* ./assets/bienvenid.jpg */
+
+.sidebar {
+  width: 250px;
+  background-color: rgba(44, 62, 80, 0.9); /* Fondo semi-transparente para que se vea el fondo */
+  color: rgb(219, 29, 29);
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.logo-image {
+  max-width: 80%; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  border-radius: 10px; /* Opcional, agrega bordes redondeados */
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  margin: 20px 0;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  background-color: #34495e;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+li:hover {
+  background-color: #1abc9c;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: transparent; /* Cambiar a transparente */
+  /* O puedes eliminar el color de fondo */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-radius: 5px; /* Bordes redondeados */
+  color: #ffffff; /* Texto blanco */
+  margin-bottom: 10px;
+  background-color: #4e7b7b; /* Color de fondo para los elementos */
+}
+
+.sidebar li:hover {
+  background-color: #4a90e2; /* Color más claro al pasar el mouse */
+}
+
+.main-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+  background-color: transparent; /* Cambiar a transparente */
+}
+
+
+.stat-box {
+  flex: 1;
+  padding: 20px;
+  border: none; /* Quitar borde para un aspecto más limpio */
+  margin: 0 10px;
+  text-align: center;
+  border-radius: 10px; /* Bordes más redondeados */
+  box-shadow: none; /* Quitar sombra para no interferir con el fondo */
+  color: #ffffff; /* Texto blanco */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente si necesitas */
+}
+.stats-container {
+    background-color: transparent; /* O el color que prefieras */
+}
+
+.stat-box {
+    background-color: transparent; /* O un color con opacidad */
+    border: 1px solid #ccc; /* Opcional, para darle un borde a las cajas */
+    padding: 10px; /* Ajustar el espacio interior */
+    border-radius: 5px; /* Redondear los bordes si lo deseas */
+}
+.stat-box:nth-child(1) {
+  background-color: #4a90e2;
+}
+
+.stat-box:nth-child(2) {
+  background-color: #0cb3d4;
+}
+
+.stat-box:nth-child(3) {
+  background-color: #db4291;
+}
+
+.calendar-container {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  background-color: #ffffff; /* Fondo blanco para el calendario */
+  text-align: center; /* Centrar contenido */
+  font-family: 'Poppins', sans-serif; /* Aplicar la fuente personalizada */
+}
+
+.calendar-container h2 {
+  font-size: 24px; /* Tamaño de la fuente */
+  font-weight: 600; /* Peso de la fuente */
+  color: #333; /* Color de la fuente */
+  margin-bottom: 20px;
+}
+.user-info {
+  position: absolute; /* Para posicionar en la esquina superior derecha */
+  top: 10px; /* Mueve el ícono un poco más arriba */
+  right: 20px; /* Distancia desde la derecha */
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.user-icon {
+  width: 50px; /* Tamaño del ícono */
+  height: 50px; /* Tamaño del ícono */
+  border-radius: 50%; /* Hacer el ícono circular */
+  margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.dropdown {
+  position: absolute; /* Para posicionar el menú desplegable */
+  top: 60px; /* Distancia desde la parte superior del contenedor */
+  right: 0; /* Alinear a la derecha */
+  background-color: #ffffff; /* Fondo blanco */
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de profundidad */
+  z-index: 10; /* Asegura que esté por encima de otros elementos */
+  display: block; /* Inicialmente oculto */
+}
+
+.user-info:hover .dropdown {
+  display: block; /* Mostrar al pasar el mouse */
+}
+
+.dropdown p {
+  margin: 0 0 10px; /* Espaciado en el texto */
+  font-size: 14px; /* Tamaño del texto */
+  color: #333; /* Color del texto */
+}
+
+.logout-button {
+  background-color: #d0021b; /* Color rojo para el botón de salir */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 15px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background 0.3s; /* Transición para el color de fondo */
+  width: 100%; /* Botón ocupa el ancho completo */
+}
+
+.logout-button:hover {
+  background-color: #b00000; /* Color más oscuro al pasar el mouse */
+}
+/* Estilos personalizados para el calendario */
+.react-calendar__tile {
+  padding: 15px;
+  background-color: #f0f8ff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__tile--now {
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 5px;
+}
+
+.react-calendar__tile--active {
+  background-color: #ff47e0;
+  color: white;
+  border-radius: 5px;
+}
+
+.react-calendar__tile:hover {
+  background-color: #add8e6;
+  color: #fff;
+}
+
+/* Centrar el contenido del calendario */
+.react-calendar__viewContainer {
+  display: flex;
+  justify-content: center;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0; /* Asegúrate de que no haya márgenes en el body */
+}
+.admin-dashboard {
+  background-color: red !important; /* Color visible para depuración */
+}
+
+.main-content {
+  background-color: blue !important; /* Color visible para depuración */
+}
+
+.stats-container {
+  background-color: green !important; /* Color visible para depuración */
+}
+.main-content {
+  background-color: rgba(255, 255, 255, 0.5) !important; /* Blanco con 50% de opacidad */
+}

@@ -1,0 +1,53 @@
+/* Contenedor principal de las habitaciones */
+.habitaciones-container {
+  padding: 20px;
+  background-color: #f4f7f9; /* Fondo claro para el contenedor */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  position: relative; /* Necesario para el pseudo-elemento */
+  overflow: hidden; /* Evitar que el contenido desborde */
+}
+
+/* Imagen de fondo (marca de agua) */
+.habitaciones-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./assets/login2.jpg'); /* Ruta a tu imagen */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* No repetir la imagen */
+  opacity: 0.1; /* Ajusta la opacidad según sea necesario */
+  z-index: -1; /* Coloca la imagen detrás del contenido */
+}
+
+/* Estilos de la tabla */
+.habitaciones-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para la tabla */
+  border-radius: 10px;
+  overflow: hidden; /* Para bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para la tabla */
+}
+
+.habitaciones-table th, .habitaciones-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.habitaciones-table th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}

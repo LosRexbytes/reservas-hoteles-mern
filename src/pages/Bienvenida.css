@@ -1,0 +1,162 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.header {
+  background-color: #3f8182;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+/* Banner */
+.banner {
+  background-image: url('./assets/bienvenid.jpg'); /* Cambia la ruta de la imagen */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el área del banner */
+  background-position: center;
+  height: 300px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input, 
+.search-box select {
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-box button {
+  width: 100%;
+  padding: 10px;
+  background-color: #246d7d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-box button:hover {
+  background-color: #1e5d69;
+}
+
+/* Contenido principal */
+.main-content {
+  text-align: center;
+  padding: 50px;
+  background-color: #fff;
+  margin: 30px 0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Tarjetas de hotel */
+.hotel-card {
+  background-color: #fff;
+  width: 280px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.hotel-card:hover {
+  transform: translateY(-5px);
+}
+
+.hotel-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.hotel-card h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.hotel-card p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.hotel-card .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #268692;
+  margin-bottom: 15px;
+}
+
+.hotel-card button {
+  background-color: #268692;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.hotel-card button:hover {
+  background-color: #1e5d69;
+}
+
+/* Pie de página */
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #3f8182;
+  color: white;
+  margin-top: 40px;
+}
+
+footer p {
+  margin: 0;
+}
