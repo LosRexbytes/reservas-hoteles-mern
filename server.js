@@ -19,23 +19,34 @@ mongoose.connect('mongodb://localhost:27017/DBHOTEL', {
 
 // Modelo de Usuario
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  username: { type: String, required: true, minlength: 8, maxlength: 20 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'Users' }
+  role: { type: String, default: 'user' }
 });
 
 const User = mongoose.model('User', userSchema);
 
 // Modelo de Habitacion
-const HabitacionSchema = new mongoose.Schema({
-  nombre: { type: String, required: true },
-  disponible: { type: Boolean, required: true },
-  fechaEntrada: { type: Date },
-  fechaSalida: { type: Date },
+const habitacionSchema = new mongoose.Schema({
+  room_type: { type: String, required: true },
+  price_per_night: { type: Number, required: true },
+  availability: { type: Boolean, required: true }
 });
 
-const Habitacion = mongoose.model('Habitacion', HabitacionSchema);
+const Habitacion = mongoose.model('Habitacion', habitacionSchema);
+
+// Modelo de Reservación
+const reservationSchema = new mongoose.Schema({
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  room_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Habitacion', required: true },
+  check_in_date: { type: Date, required: true },
+  check_out_date: { type: Date, required: true },
+  total_price: { type: Number, required: true },
+  status: { type: String, enum: ['iniciado', 'finalizado'], required: true }
+});
+
+const Reservation = mongoose.model('Reservation', reservationSchema);
 
 // Endpoint para obtener habitaciones
 app.get('/api/habitacions', async (req, res) => {
@@ -51,20 +62,15 @@ app.get('/api/habitacions', async (req, res) => {
 // Endpoint para crear una nueva habitación
 app.post('/api/habitacions', async (req, res) => {
   try {
-    const { nombre, disponible, fechaEntrada, fechaSalida } = req.body;
+    const { room_type, price_per_night, availability } = req.body;
 
-    // Crear una nueva instancia del modelo "Habitacion"
     const nuevaHabitacion = new Habitacion({
-      nombre,
-      disponible,
-      fechaEntrada,
-      fechaSalida
+      room_type,
+      price_per_night,
+      availability
     });
 
-    // Guardar la nueva habitación en la base de datos
     await nuevaHabitacion.save();
-
-    // Responder con la habitación creada
     res.status(201).json(nuevaHabitacion);
   } catch (error) {
     console.error('Error al crear la habitación:', error);
@@ -72,6 +78,28 @@ app.post('/api/habitacions', async (req, res) => {
   }
 });
 
+// Endpoint para registrar un nuevo usuario
+app.post('/auth/register', async (req, res) => {
+  const { username, email, password, role = 'user' } = req.body;
+
+  try {
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = new User({ username, email, password: hashedPassword, role });
+    await user.save();
+    res.status(201).json({ message: 'Usuario registrado con éxito' });
+  } catch (error) {
+    console.error('Error al registrar el usuario:', error);
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'El correo ya está registrado' });
+    }
+    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
+  }
+});
 
 // Endpoint para iniciar sesión
 app.post('/auth/login', async (req, res) => {
@@ -89,36 +117,32 @@ app.post('/auth/login', async (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    res.json({ username: user.name, role: user.role });
+    res.json({ username: user.username, role: user.role });
   } catch (error) {
     console.error('Error en el servidor:', error);
     res.status(500).json({ message: 'Error del servidor' });
   }
 });
 
-// Endpoint para registrar un nuevo usuario
-// Endpoint para registrar un nuevo usuario
-app.post('/auth/register', async (req, res) => {
-  const { name, email, password, role = 'user' } = req.body;
+// Endpoint para crear una reservación
+app.post('/api/reservations', async (req, res) => {
+  const { user_id, room_id, check_in_date, check_out_date, total_price, status } = req.body;
 
   try {
-    // Validaciones
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
+    const newReservation = new Reservation({
+      user_id,
+      room_id,
+      check_in_date,
+      check_out_date,
+      total_price,
+      status
+    });
 
-    // Crea el nuevo usuario
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User({ name, email, password: hashedPassword, role });
-    await user.save();
-    res.status(201).json({ message: 'Usuario registrado con éxito' });
+    await newReservation.save();
+    res.status(201).json(newReservation);
   } catch (error) {
-    console.error('Error al registrar el usuario:', error);
-    if (error.code === 11000) {
-      return res.status(400).json({ message: 'El correo ya está registrado' });
-    }
-    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
+    console.error('Error al crear la reservación:', error);
+    res.status(500).json({ message: 'Error al crear la reservación' });
   }
 });
 

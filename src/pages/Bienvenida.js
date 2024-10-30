@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import habSimple from './assets/habSimples.jpg';
 import habDoble from './assets/habDobles.jpg';
 import habMatrimonial from './assets/habMatrimonial.jpg';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; // Añadido useNavigate
 import './Bienvenida.css';
 
 const Bienvenida = () => {
@@ -10,43 +10,28 @@ const Bienvenida = () => {
   const [checkOutDate, setCheckOutDate] = useState('');
   const [guests, setGuests] = useState('');
   
-  const navigate = useNavigate();
-  
-  // Al iniciar, verifica si el usuario está autenticado
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const authStatus = localStorage.getItem('isAuthenticated') === 'true';
-    setIsAuthenticated(authStatus); // Actualiza el estado
-  }, []);
+  const navigate = useNavigate(); // Definido aquí
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`Check-In: ${checkInDate}, Check-Out: ${checkOutDate}, Guests: ${guests}`);
-    
-    // Redirige a la página de búsqueda de habitaciones
-    navigate('/Buscar-habitaciones'); 
+    // Aquí puedes hacer una petición al backend si necesitas procesar el formulario
   };
+  
 
   const handleLogin = () => {
-    navigate('/login', { state: { from: '/reservas' } }); // Guarda la ruta de destino
+    // Redirección al formulario de inicio de sesión
+    navigate('/login');
   };
 
   const handleRegister = () => {
+    // Redirección al formulario de registro
     navigate('/register');
   };
 
-  const handleReservar = () => {
-    // Redirige según el estado de autenticación
-    if (!isAuthenticated) {
-      // Si no está autenticado, redirige a login y guarda la ruta de retorno
-      navigate('/login', { state: { from: '/reservas' } });
-    } else {
-      // Si está autenticado, redirige a la página de reservas
-      navigate('/reservas');
-    }
-  };
-  
+  const handleBuscarhab = () => {
+    navigate('/buscar-hab');
+  }
 
   return (
     <div>
@@ -60,7 +45,7 @@ const Bienvenida = () => {
 
       <div className="banner">
         <form className="search-box" onSubmit={handleSubmit}>
-          <h2>Encuentra tu habitación ideal</h2>
+          <h2>Encuentra tu habitacion ideal</h2>
           <input
             type="date"
             placeholder="dd/mm/aaaa"
@@ -83,7 +68,7 @@ const Bienvenida = () => {
             <option value="3">3 Huéspedes</option>
             <option value="4">4 Huéspedes</option>
           </select>
-          <button type="submit">Buscar</button>
+          <button onClick={handleBuscarhab}>Buscar</button>
         </form>
       </div>
 
@@ -92,24 +77,24 @@ const Bienvenida = () => {
 
         <div className="hotel-cards">
           <div className="hotel-card">
-            <img src={habSimple} alt="Habitación simple" />
+            <img src={habSimple} alt="Habitacion simple" />
             <h3>Habitación simple</h3>
             <p>Ubicado en el centro de la ciudad</p>
-            <button onClick={handleReservar}>Reservar Ahora</button>
+            <button onClick={handleLogin}>Reservar Ahora</button>
           </div>
 
           <div className="hotel-card">
-            <img src={habDoble} alt="Habitación doble" />
+            <img src={habDoble} alt="Habitacion doble" />
             <h3>Habitación doble</h3>
             <p>Ideal para parejas o amigos</p>
-            <button onClick={handleReservar}>Reservar Ahora</button>
+            <button onClick={handleLogin}>Reservar Ahora</button>
           </div>
 
           <div className="hotel-card">
-            <img src={habMatrimonial} alt="Habitación matrimonial" />
+            <img src={habMatrimonial} alt="Habitacion matrimonial" />
             <h3>Habitación matrimonial</h3>
             <p>El mejor servicio y comodidad</p>
-            <button onClick={handleReservar}>Reservar Ahora</button>
+            <button onClick={handleLogin}>Reservar Ahora</button>
           </div>
         </div>
       </main>

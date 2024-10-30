@@ -1,6 +1,6 @@
-//ListaHabitaciones.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './ListaHabitaciones.css'; // Importa el archivo CSS
 
 const ListaHabitaciones = () => {
   const [habitaciones, setHabitaciones] = useState([]);
@@ -9,10 +9,10 @@ const ListaHabitaciones = () => {
   useEffect(() => {
     const fetchHabitaciones = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/habitaciones');
+        const response = await axios.get('http://localhost:3001/api/habitacions');
         setHabitaciones(response.data);
       } catch (err) {
-        setError('Error al cargar las habitaciones MONGOl');
+        setError('Error al cargar las habitaciones');
       }
     };
 
@@ -20,31 +20,31 @@ const ListaHabitaciones = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h2>Lista de Habitaciones</h2>
       {error && <p className="error">{error}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th>Fecha de Entrada</th>
-            <th>Fecha de Salida</th>
-          </tr>
-        </thead>
-        <tbody>
-          {habitaciones.map((habitacion) => (
-            <tr key={habitacion._id}>
-              <td>{habitacion._id}</td>
-              <td>{habitacion.nombre}</td>
-              <td>{habitacion.disponible ? 'Disponible' : 'No Disponible'}</td>
-              <td>{habitacion.fechaEntrada ? new Date(habitacion.fechaEntrada).toLocaleDateString() : 'N/A'}</td>
-              <td>{habitacion.fechaSalida ? new Date(habitacion.fechaSalida).toLocaleDateString() : 'N/A'}</td>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tipo de Habitación</th>
+              <th>Precio por Noche</th>
+              <th>Disponibilidad</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {habitaciones.map((habitacion) => (
+              <tr key={habitacion._id}>
+                <td>{habitacion._id}</td>
+                <td>{habitacion.room_type}</td>
+                <td>{habitacion.price_per_night}</td>
+                <td>{habitacion.availability ? 'Disponible' : 'No Disponible'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

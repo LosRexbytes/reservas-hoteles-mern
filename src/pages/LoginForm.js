@@ -31,7 +31,7 @@ const LoginForm = () => {
       if (response.data.role === 'admin') {
         navigate('/admin-dashboard'); // Redirigir a Admin Dashboard
       } else {
-        navigate('/bienvenida'); // Redirigir a la página de Bienvenida
+        navigate('/buscar-hab'); // Redirigir a la página de Bienvenida
       }
     } catch (error) {
       if (error.response) {
@@ -52,7 +52,7 @@ const LoginForm = () => {
   const handleForgoRegister = () => {
     navigate('/register');
   };
-
+  const handleLogin = () => navigate('/login');
   return (
     <div className="App-container">
       <div className="App-box">
@@ -78,7 +78,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">LOGIN</button>
+          <button onClick={handleLogin}>LOGIN</button>
           <div className="extras">
             <label>
               <input type="checkbox" /> Guardar
