@@ -73,7 +73,7 @@ const Bienvenida = () => {
       </div>
 
       <main className="main-content">
-        <h2>Explora nuestras opciones de hoteles</h2>
+        <h2>Explora nuestras opciones</h2>
 
         <div className="hotel-cards">
           <div className="hotel-card">
