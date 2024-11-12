@@ -10,6 +10,9 @@ import './Buscarhabitaciones.css';
 const Buscarhabitaciones = () => {
   const navigate = useNavigate();
   const [selectedRoomType, setSelectedRoomType] = useState('');
+  const [roomCount, setRoomCount] = useState(1); // Número de habitaciones
+  const [checkInDate, setCheckInDate] = useState('');
+  const [checkOutDate, setCheckOutDate] = useState('');
 
   // Datos de habitaciones según el tipo
   const roomTypes = {
@@ -34,14 +37,57 @@ const Buscarhabitaciones = () => {
   const handleLogin = () => navigate('/login');
   const handleRegister = () => navigate('/register');
   const handlehabitacionlujo = () => navigate('/lujo');
-  const handleVolver = () => {
-    navigate(-1); 
-  };
+  const handleVolver = () => navigate(-1);
   const handleVERHAB = () => navigate('/ver-hab');
 
   const handleRoomTypeChange = (e) => {
     setSelectedRoomType(e.target.value);
   };
+
+  const handleRoomCountChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    setRoomCount(isNaN(value) ? 1 : Math.max(1, Math.min(5, value))); // Rango 1-5
+  };
+
+  const handleRoomCountBlur = () => {
+    if (roomCount < 1) setRoomCount(1);
+    if (roomCount > 5) setRoomCount(5);
+  };
+
+  const handleCheckInChange = (e) => {
+    const today = new Date().toISOString().split('T')[0];
+    const value = e.target.value;
+    if (value < today) {
+      setCheckInDate(today); // No permite fechas anteriores a hoy
+    } else {
+      setCheckInDate(value);
+      // Ajusta el checkout si es necesario
+      if (checkOutDate && new Date(value) >= new Date(checkOutDate)) {
+        const nextDay = new Date(value);
+        nextDay.setDate(nextDay.getDate() + 1);
+        setCheckOutDate(nextDay.toISOString().split('T')[0]);
+      }
+    }
+  };
+
+  const handleCheckOutChange = (e) => {
+    const value = e.target.value;
+    const minCheckout = new Date(checkInDate);
+    minCheckout.setDate(minCheckout.getDate() + 1); // Mínimo 1 día después del check-in
+
+    const maxCheckout = new Date(checkInDate);
+    maxCheckout.setMonth(maxCheckout.getMonth() + 1); // Máximo 1 mes después del check-in
+
+    if (new Date(value) < minCheckout) {
+      setCheckOutDate(minCheckout.toISOString().split('T')[0]);
+    } else if (new Date(value) > maxCheckout) {
+      setCheckOutDate(maxCheckout.toISOString().split('T')[0]);
+    } else {
+      setCheckOutDate(value);
+    }
+  };
+
+  const today = new Date().toISOString().split('T')[0]; // Fecha actual
 
   return (
     <div className="buscarhabitaciones">
@@ -61,15 +107,33 @@ const Buscarhabitaciones = () => {
       <section className="reservation-form">
         <div>
           <label>Check-In:</label>
-          <input type="date" />
+          <input
+            type="date"
+            value={checkInDate}
+            onChange={handleCheckInChange}
+            min={today}
+          />
         </div>
         <div>
           <label>Check-Out:</label>
-          <input type="date" />
+          <input
+            type="date"
+            value={checkOutDate}
+            onChange={handleCheckOutChange}
+            min={checkInDate ? new Date(checkInDate).toISOString().split('T')[0] : today}
+            max={checkInDate ? new Date(new Date(checkInDate).setMonth(new Date(checkInDate).getMonth() + 1)).toISOString().split('T')[0] : ''}
+          />
         </div>
         <div>
           <label>Número de Habitaciones:</label>
-          <input type="number" min="1" max="5" />
+          <input
+            type="number"
+            value={roomCount}
+            onChange={handleRoomCountChange}
+            onBlur={handleRoomCountBlur}
+            min="1"
+            max="5"
+          />
         </div>
         <div>
           <label>Buscar Habitación:</label>
