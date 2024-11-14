@@ -79,17 +79,17 @@ const RegisterForm = () => {
     if (!isFormValid()) return;
 
     const userData = {
-      username: formData.username, // Cambiado de nombre a username
+      username: formData.username,
       email: formData.email,
       password: formData.password,
       role: formData.role
     };
 
     try {
-      await axios.post('http://localhost:3001/auth/register', userData);
-      setMessage('Usuario registrado exitosamente');
+      const response = await axios.post('http://localhost:3001/auth/register', userData);
+      alert('Usuario registrado exitosamente'); // Agregamos el alert aquí
       setFormData({
-        username: '', // Cambiado de nombre a username
+        username: '',
         email: '',
         password: '',
         confirmarContraseña: '',
@@ -113,7 +113,7 @@ const RegisterForm = () => {
     return (
       formData.password === formData.confirmarContraseña &&
       errors.password.length === 0 &&
-      formData.username.trim() !== '' && // Cambiado de nombre a username
+      formData.username.trim() !== '' &&
       formData.email.trim() !== '' &&
       /\S+@\S+\.\S+/.test(formData.email)
     );
