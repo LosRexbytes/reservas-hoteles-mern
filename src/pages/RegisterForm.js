@@ -14,6 +14,7 @@ const RegisterForm = () => {
   });
 
   const [errors, setErrors] = useState({
+    email: '',
     password: [],
     passwordMatch: ''
   });
@@ -33,6 +34,24 @@ const RegisterForm = () => {
 
     if (name === 'confirmarContraseña') {
       checkPasswordMatch(formData.password, value);
+    }
+
+    if (name === 'email') {
+      validateEmail(value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'El correo electrónico es inválido.'
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: ''
+      }));
     }
   };
 
@@ -96,6 +115,7 @@ const RegisterForm = () => {
         role: 'user'
       });
       setErrors({
+        email: '',
         password: [],
         passwordMatch: ''
       });
@@ -115,7 +135,7 @@ const RegisterForm = () => {
       errors.password.length === 0 &&
       formData.username.trim() !== '' &&
       formData.email.trim() !== '' &&
-      /\S+@\S+\.\S+/.test(formData.email)
+      errors.email === ''
     );
   };
 
@@ -143,6 +163,11 @@ const RegisterForm = () => {
             value={formData.email}
             onChange={handleChange}
           />
+          {errors.email && (
+            <div style={{ color: 'red' }}>
+              <p>{errors.email}</p>
+            </div>
+          )}
           <label htmlFor="password">Contraseña</label>
           <input
             id="password"
