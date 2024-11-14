@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const RegisterForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    nombre: '',
+    username: '',
     email: '',
     password: '',
     confirmarContraseña: '',
@@ -76,20 +76,20 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isFormValid()) return; // Asegurarse de que el formulario es válido antes de enviar
+    if (!isFormValid()) return;
 
     const userData = {
-      name: formData.nombre,
+      username: formData.username, // Cambiado de nombre a username
       email: formData.email,
       password: formData.password,
-      role: formData.role // Usar role del estado
+      role: formData.role
     };
 
     try {
       await axios.post('http://localhost:3001/auth/register', userData);
       setMessage('Usuario registrado exitosamente');
       setFormData({
-        nombre: '',
+        username: '', // Cambiado de nombre a username
         email: '',
         password: '',
         confirmarContraseña: '',
@@ -113,9 +113,9 @@ const RegisterForm = () => {
     return (
       formData.password === formData.confirmarContraseña &&
       errors.password.length === 0 &&
-      formData.nombre.trim() !== '' && // Verificar que el nombre no esté vacío
-      formData.email.trim() !== '' && // Verificar que el email no esté vacío
-      /\S+@\S+\.\S+/.test(formData.email) // Validar formato de email
+      formData.username.trim() !== '' && // Cambiado de nombre a username
+      formData.email.trim() !== '' &&
+      /\S+@\S+\.\S+/.test(formData.email)
     );
   };
 
@@ -125,13 +125,13 @@ const RegisterForm = () => {
         <h1>REGISTRARSE</h1>
         {message && <div>{message}</div>}
         <form onSubmit={handleSubmit}>
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="username">Nombre de Usuario</label>
           <input
-            id="nombre"
+            id="username"
             type="text"
-            name="nombre"
-            placeholder="Nombre"
-            value={formData.nombre}
+            name="username"
+            placeholder="Nombre de Usuario"
+            value={formData.username}
             onChange={handleChange}
           />
           <label htmlFor="email">Correo</label>

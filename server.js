@@ -83,21 +83,50 @@ app.post('/auth/register', async (req, res) => {
   const { username, email, password, role = 'user' } = req.body;
 
   try {
+    // Validación de campos
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
 
+    // Validar longitud del username
+    if (username.length < 8 || username.length > 20) {
+      return res.status(400).json({ 
+        message: 'El nombre de usuario debe tener entre 8 y 20 caracteres' 
+      });
+    }
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Formato de email inválido' });
+    }
+
+    // Verificar si el email ya está registrado
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'El correo ya está registrado' });
+    }
+
+    // Hash de la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User({ username, email, password: hashedPassword, role });
+
+    // Crear nuevo usuario
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      role
+    });
+
     await user.save();
     res.status(201).json({ message: 'Usuario registrado con éxito' });
   } catch (error) {
     console.error('Error al registrar el usuario:', error);
-    if (error.code === 11000) {
-      return res.status(400).json({ message: 'El correo ya está registrado' });
-    }
-    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
+    res.status(500).json({ 
+      message: 'Error al registrar el usuario', 
+      error: error.message 
+    });
   }
 });
 
@@ -106,7 +135,12 @@ app.post('/auth/login', async (req, res) => {
   const { usernameEmail, password } = req.body;
 
   try {
-    const user = await User.findOne({ email: usernameEmail });
+    const user = await User.findOne({
+      $or: [
+        { email: usernameEmail },
+        { username: usernameEmail }
+      ]
+    });
 
     if (!user) {
       return res.status(401).json({ message: 'Usuario no encontrado' });
@@ -117,7 +151,11 @@ app.post('/auth/login', async (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    res.json({ username: user.username, role: user.role });
+    res.json({ 
+      username: user.username, 
+      role: user.role,
+      message: 'Inicio de sesión exitoso' 
+    });
   } catch (error) {
     console.error('Error en el servidor:', error);
     res.status(500).json({ message: 'Error del servidor' });
