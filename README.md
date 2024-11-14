@@ -35,5 +35,6 @@ El Sistema de Reservas está diseñado para el Hotel Risueños, optimizando la e
 - Ccansaya Soncco Rebeca Araceli
 - Quispe Mamani Thalia
 - Condori Lacuta Luis Fernando
+- Pachari Lipa Milton Alexis
 
 **Cusco – Perú, 2024**
