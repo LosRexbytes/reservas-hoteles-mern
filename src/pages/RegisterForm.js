@@ -105,7 +105,7 @@ const RegisterForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/register', userData);
+      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/register', userData);
       alert('Usuario registrado exitosamente'); // Agregamos el alert aquí
       setFormData({
         username: '',
