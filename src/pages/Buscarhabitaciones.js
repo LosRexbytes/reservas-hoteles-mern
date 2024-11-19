@@ -7,6 +7,7 @@ import simpleRoom from './assets/simpleRoom.jpg';
 import doubleRoom from './assets/doubleRoom.jpg';
 import './Buscarhabitaciones.css';
 
+
 const Buscarhabitaciones = () => {
   const navigate = useNavigate();
   const [selectedRoomType, setSelectedRoomType] = useState('');
@@ -93,7 +94,7 @@ const Buscarhabitaciones = () => {
     <div className="buscarhabitaciones">
       <header className="headerBH">
         <img src={hotelLogo} alt="Hotel Logo" className="hotel-logo" />
-        <h1>Bienvenidos al Hotel Risueños</h1>
+        <h1>Descansa bajo las estrellas de los Andes!</h1>
         <nav>
           <a href="/login" onClick={(e) => { e.preventDefault(); handleLogin(); }}>Iniciar Sesión</a>
           <a href="/register" onClick={(e) => { e.preventDefault(); handleRegister(); }}>Registro</a>
@@ -163,6 +164,7 @@ const Buscarhabitaciones = () => {
       <footer className="footer">
         <button className="button" onClick={handleVolver}>VOLVER</button>
         <button className="button primary" onClick={handleVERHAB}>VER HABITACIONES</button>
+        <button className="button" onClick={() => navigate('/historial-habitaciones')}>HISTORIAL DE RESERVAS</button>
       </footer>
     </div>
   );

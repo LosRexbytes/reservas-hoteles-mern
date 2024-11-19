@@ -6,6 +6,27 @@ body {
   background-color: #f0f0f0;
 }
 
+.title-container {
+  display: flex;
+  flex-direction: column; /* Asegura que los títulos estén apilados */
+  align-items: flex-start; /* Alinea los elementos a la izquierda */
+  justify-content: center; /* Centra los elementos verticalmente */
+}
+
+.main-title {
+  font-size: 3rem; /* Título grande */
+  color: white;
+  text-align: left; /* Alinea el texto a la izquierda */
+  margin: 0; /* Elimina margen */
+}
+
+.sub-title {
+  font-size: 1.8rem; /* Título secundario un poco más pequeño */
+  color: white !important;
+  text-align: left; /* Alinea el texto a la izquierda */
+  margin-top: 5px; /* Separación entre los dos títulos */
+}
+
 .header {
   background-color: #3f8182;
   color: white;

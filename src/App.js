@@ -16,6 +16,8 @@ import HABITACIONESADMIN from './pages/ListaHabitaciones';
 import './App.css';  // Importa los estilos generales de la aplicación
 import ListaHabitaciones from './pages/ListaHabitaciones';
 
+import HistorialReservas from './pages/HistorialReservas';
+
 function App() {
   return (
     <Router>
@@ -45,6 +47,10 @@ function App() {
           {/* Ruta para el formulario de ver habitaciones */}
           <Route path="/ver-hab" element={<VERHAB />} />
 
+          {/* Ruta para el formulario de ver historial de habitaciones */}
+          <Route path="/historial-habitaciones" element={<HistorialReservas />} />
+
+
           {/* Ruta para entrar al admin*/}
           <Route path="/admin-dashboard" element={<ADMINDASHBOARD />} />
           <Route path="/habitaciones" element={<ListaHabitaciones />} />
@@ -52,6 +58,8 @@ function App() {
           <Route path="/lujo" element={<HabitacionLujo />} />
           <Route path="/matrimonial" element={<HabitacionMatrimonial />} />
           <Route path="/reservaAceptada" element={<ReservaAceptada />} />
+
+
 
 
         </Routes>

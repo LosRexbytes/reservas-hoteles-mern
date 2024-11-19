@@ -48,6 +48,35 @@ const reservationSchema = new mongoose.Schema({
 
 const Reservation = mongoose.model('Reservation', reservationSchema);
 
+
+
+// Ojo amiguito
+// Endpoint para obtener el historial de reservas de un usuario
+app.get('/api/historial-habitaciones/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  // Validar si el userId es un ObjectId válido
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: 'ID de usuario no válido' });
+  }
+
+  try {
+    // Encuentra todas las reservas relacionadas con este usuario
+    const reservas = await Reservation.find({ user_id: userId })
+      .populate('room_id', 'room_type price_per_night');
+
+    if (!reservas.length) {
+      return res.status(404).json({ message: 'No se encontraron reservas para este usuario' });
+    }
+
+    res.status(200).json(reservas);
+  } catch (error) {
+    console.error('Error al obtener el historial de reservas:', error);
+    res.status(500).json({ message: 'Error al cargar el historial de reservas' });
+  }
+});
+
+
 // Endpoint para obtener habitaciones
 app.get('/api/habitacions', async (req, res) => {
   try {
@@ -83,50 +112,21 @@ app.post('/auth/register', async (req, res) => {
   const { username, email, password, role = 'user' } = req.body;
 
   try {
-    // Validación de campos
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
 
-    // Validar longitud del username
-    if (username.length < 8 || username.length > 20) {
-      return res.status(400).json({ 
-        message: 'El nombre de usuario debe tener entre 8 y 20 caracteres' 
-      });
-    }
-
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Formato de email inválido' });
-    }
-
-    // Verificar si el email ya está registrado
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'El correo ya está registrado' });
-    }
-
-    // Hash de la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Crear nuevo usuario
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
-      role
-    });
-
+    const user = new User({ username, email, password: hashedPassword, role });
     await user.save();
     res.status(201).json({ message: 'Usuario registrado con éxito' });
   } catch (error) {
     console.error('Error al registrar el usuario:', error);
-    res.status(500).json({ 
-      message: 'Error al registrar el usuario', 
-      error: error.message 
-    });
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'El correo ya está registrado' });
+    }
+    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
   }
 });
 
@@ -135,12 +135,7 @@ app.post('/auth/login', async (req, res) => {
   const { usernameEmail, password } = req.body;
 
   try {
-    const user = await User.findOne({
-      $or: [
-        { email: usernameEmail },
-        { username: usernameEmail }
-      ]
-    });
+    const user = await User.findOne({ email: usernameEmail });
 
     if (!user) {
       return res.status(401).json({ message: 'Usuario no encontrado' });
@@ -151,11 +146,7 @@ app.post('/auth/login', async (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    res.json({ 
-      username: user.username, 
-      role: user.role,
-      message: 'Inicio de sesión exitoso' 
-    });
+    res.json({ username: user.username, role: user.role });
   } catch (error) {
     console.error('Error en el servidor:', error);
     res.status(500).json({ message: 'Error del servidor' });

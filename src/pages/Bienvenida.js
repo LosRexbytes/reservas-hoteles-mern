@@ -36,7 +36,10 @@ const Bienvenida = () => {
   return (
     <div>
       <header className="header">
-        <h1>Risueños - Reserva de Habitación</h1>
+        <div className="title-container">
+          <h1 className="main-title">Posada Risueños</h1>
+          <h2 className="sub-title">Bienvenido a tu refugio Andino</h2>
+        </div>
         <nav>
           <a href="/login" onClick={handleLogin}>Iniciar Sesión</a>
           <a href="/register" onClick={handleRegister}>Registro</a>
@@ -46,28 +49,7 @@ const Bienvenida = () => {
       <div className="banner">
         <form className="search-box" onSubmit={handleSubmit}>
           <h2>Encuentra tu habitacion ideal</h2>
-          <input
-            type="date"
-            placeholder="dd/mm/aaaa"
-            value={checkInDate}
-            onChange={(e) => setCheckInDate(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="dd/mm/aaaa"
-            value={checkOutDate}
-            onChange={(e) => setCheckOutDate(e.target.value)}
-          />
-          <select
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-          >
-            <option value="" disabled>Seleccionar Huéspedes</option>
-            <option value="1">1 Huésped</option>
-            <option value="2">2 Huéspedes</option>
-            <option value="3">3 Huéspedes</option>
-            <option value="4">4 Huéspedes</option>
-          </select>
+          
           <button onClick={handleBuscarhab}>Buscar</button>
         </form>
       </div>

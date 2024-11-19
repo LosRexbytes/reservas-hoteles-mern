@@ -16,6 +16,8 @@ const ReservaAceptada = () => {
         <p>Gracias por reservar con HOTEL RISUEÑOS</p>
         <div className="button-sectionA"> {/* Sección para el botón */}
           <button className="button volver-button" onClick={handleVolver}>VOLVER</button>
+          <button className="button" onClick={() => navigate('/historial-habitaciones')}>HISTORIAL DE RESERVAS</button>
+
         </div>
       </div>
       <div className="image-section">
