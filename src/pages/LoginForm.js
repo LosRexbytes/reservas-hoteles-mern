@@ -13,10 +13,33 @@ const LoginForm = () => {
   const navigate = useNavigate(); // Inicializar el hook para navegación
   const { setAuthData } = useAuth(); // Obtener la función para establecer datos de autenticación
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar correos electrónicos
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validar formato de correo antes de enviar la solicitud
+    if (!validateEmail(usernameEmail)) {
+      setErrorMessage('Correo inválido. Por favor, ingresa un correo electrónico válido.');
+      return;
+    }
+
+    // Validar el formato de la contraseña
+    const validatePassword = (password) => {
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      return passwordRegex.test(password);
+    };
+
+    if (!validatePassword(password)) {
+      setErrorMessage('Contraseña inválida. Por favor, ingresa una contraseña válida.');
+      return;
+    }
+
     try {
-      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/login', {
+      const response = await axios.post('http://localhost:3001/auth/login', {
         usernameEmail,
         password,
       });
@@ -34,10 +57,21 @@ const LoginForm = () => {
         navigate('/buscar-hab'); // Redirigir a la página de Bienvenida
       }
     } catch (error) {
-      if (error.response) {
-        setErrorMessage(error.response.data.message || 'Error desconocido');
+      if (error.response && error.response.data) {
+        const serverMessage = error.response.data.message;
+
+        // Mostrar mensaje específico si el correo es inválido
+        if (serverMessage.includes('Usuario no encontrado')) {
+          setErrorMessage('Usuario no encontrado. Verifica tus credenciales e intenta de nuevo.');
+        } 
+        // Verificar si el mensaje del servidor se relaciona con la contraseña
+        if (serverMessage.includes('Contraseña incorrecta')) {
+          setErrorMessage('Contraseña inválida. Por favor, ingresa una contraseña válida.');
+        } else {
+          setErrorMessage(serverMessage || 'Error desconocido.');
+        }
       } else if (error.request) {
-        setErrorMessage('No se recibió respuesta del servidor');
+        setErrorMessage('No se recibió respuesta del servidor.');
       } else {
         setErrorMessage('Error al configurar la solicitud: ' + error.message);
       }

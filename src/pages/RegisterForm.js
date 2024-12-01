@@ -42,10 +42,13 @@ const RegisterForm = () => {
   };
 
   const validateEmail = (email) => {
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    // Expresión regular para dominios aceptados: .com, .org, .net, .pe y dominios de países
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|pe|[a-z]{2})$/i;
+  
+    if (!emailRegex.test(email)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        email: 'El correo electrónico es inválido.'
+        email: 'El correo electrónico debe terminar en .com, .org, .net, .pe o un dominio de país válido (como .es, .mx, .us).'
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -54,6 +57,7 @@ const RegisterForm = () => {
       }));
     }
   };
+  
 
   const validatePassword = (password) => {
     const passwordErrors = [];
@@ -69,8 +73,8 @@ const RegisterForm = () => {
     if (!/[0-9]/.test(password)) {
       passwordErrors.push("La contraseña debe contener al menos un número.");
     }
-    if (/[^a-zA-Z0-9]/.test(password)) {
-      passwordErrors.push("La contraseña solo puede contener letras y números.");
+    if (!/[^a-zA-Z0-9]/.test(password)) {
+      passwordErrors.push("La contraseña debe contener al menos un carácter especial (por ejemplo, @, #, $, %).");
     }
 
     setErrors((prevErrors) => ({
@@ -105,7 +109,7 @@ const RegisterForm = () => {
     };
 
     try {
-      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/register', userData);
+      const response = await axios.post('http://localhost:3001/auth/register', userData);
       alert('Usuario registrado exitosamente'); // Agregamos el alert aquí
       setFormData({
         username: '',
