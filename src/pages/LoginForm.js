@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate para redirección
@@ -9,37 +9,36 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [failedAttempts, setFailedAttempts] = useState(0); // Contador de intentos fallidos
+  const [isLocked, setIsLocked] = useState(false); // Bandera para saber si está bloqueado
+  const [lockTime, setLockTime] = useState(null); // Hora de bloqueo
 
   const navigate = useNavigate(); // Inicializar el hook para navegación
   const { setAuthData } = useAuth(); // Obtener la función para establecer datos de autenticación
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar correos electrónicos
-    return emailRegex.test(email);
-  };
+  const MAX_FAILED_ATTEMPTS = 5; // Límite de intentos fallidos
+  const LOCK_DURATION = 5 * 60 * 1000; // Duración del bloqueo en milisegundos (5 minutos)
 
+  // Función que maneja el login
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar formato de correo antes de enviar la solicitud
-    if (!validateEmail(usernameEmail)) {
-      setErrorMessage('Correo inválido. Por favor, ingresa un correo electrónico válido.');
-      return;
-    }
-
-    // Validar el formato de la contraseña
-    const validatePassword = (password) => {
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      return passwordRegex.test(password);
-    };
-
-    if (!validatePassword(password)) {
-      setErrorMessage('Contraseña inválida. Por favor, ingresa una contraseña válida.');
-      return;
+    if (isLocked) {
+      const remainingTime = lockTime - Date.now();
+      if (remainingTime > 0) {
+        setErrorMessage(
+          `Demasiados intentos fallidos. Por favor, inténtalo de nuevo en ${Math.ceil(remainingTime / 1000)} segundos.`
+        );
+        return;
+      } else {
+        setIsLocked(false); // Desbloquear después de la duración
+        setFailedAttempts(0); // Restablecer contador de intentos fallidos
+        setLockTime(null); // Limpiar la hora de bloqueo
+      }
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/login', {
+      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/login', {
         usernameEmail,
         password,
       });
@@ -57,24 +56,25 @@ const LoginForm = () => {
         navigate('/buscar-hab'); // Redirigir a la página de Bienvenida
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        const serverMessage = error.response.data.message;
-
-        // Mostrar mensaje específico si el correo es inválido
-        if (serverMessage.includes('Usuario no encontrado')) {
-          setErrorMessage('Usuario no encontrado. Verifica tus credenciales e intenta de nuevo.');
-        } 
-        // Verificar si el mensaje del servidor se relaciona con la contraseña
-        if (serverMessage.includes('Contraseña incorrecta')) {
-          setErrorMessage('Contraseña inválida. Por favor, ingresa una contraseña válida.');
-        } else {
-          setErrorMessage(serverMessage || 'Error desconocido.');
-        }
+      if (error.response) {
+        setErrorMessage(error.response.data.message || 'Error desconocido');
       } else if (error.request) {
-        setErrorMessage('No se recibió respuesta del servidor.');
+        setErrorMessage('No se recibió respuesta del servidor');
       } else {
         setErrorMessage('Error al configurar la solicitud: ' + error.message);
       }
+
+      // Incrementar el contador de intentos fallidos
+      setFailedAttempts((prevAttempts) => {
+        const newAttempts = prevAttempts + 1;
+        if (newAttempts >= MAX_FAILED_ATTEMPTS) {
+          setIsLocked(true);
+          setLockTime(Date.now() + LOCK_DURATION); // Establecer la hora de bloqueo
+          setErrorMessage('Demasiados intentos fallidos. Por favor, inténtalo de nuevo más tarde.');
+        }
+        return newAttempts;
+      });
+
       setSuccessMessage('');
     }
   };
@@ -86,7 +86,25 @@ const LoginForm = () => {
   const handleForgoRegister = () => {
     navigate('/register');
   };
+
   const handleLogin = () => navigate('/login');
+
+  // Redirigir o mostrar mensaje de bloqueo si está bloqueado
+  useEffect(() => {
+    if (isLocked) {
+      const remainingTime = lockTime - Date.now();
+      if (remainingTime > 0) {
+        const timer = setTimeout(() => {
+          setIsLocked(false);
+          setFailedAttempts(0); // Resetear intentos fallidos al desbloquear
+          setLockTime(null);
+          setErrorMessage('');
+        }, remainingTime);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isLocked, lockTime]);
+
   return (
     <div className="App-container">
       <div className="App-box">
@@ -102,6 +120,7 @@ const LoginForm = () => {
             value={usernameEmail}
             onChange={(e) => setUsernameEmail(e.target.value)}
             required
+            disabled={isLocked} // Deshabilitar el formulario si está bloqueado
           />
           <label htmlFor="password">Password:</label>
           <input
@@ -111,8 +130,9 @@ const LoginForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={isLocked} // Deshabilitar el formulario si está bloqueado
           />
-          <button onClick={handleLogin}>LOGIN</button>
+          <button disabled={isLocked}>LOGIN</button>
           <div className="extras">
             <label>
               <input type="checkbox" /> Guardar
@@ -127,4 +147,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

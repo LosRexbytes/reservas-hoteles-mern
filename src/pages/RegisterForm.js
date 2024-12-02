@@ -77,6 +77,10 @@ const RegisterForm = () => {
       passwordErrors.push("La contraseña debe contener al menos un carácter especial (por ejemplo, @, #, $, %).");
     }
 
+    if (!/[a-z]/.test(password)) {
+      passwordErrors.push("La contraseña debe contener al menos una letra minúscula.");
+    }
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       password: passwordErrors
