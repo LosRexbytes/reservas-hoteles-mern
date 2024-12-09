@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate para redirección
-import { useAuth } from '../context/AuthContext'; // Importar el contexto de autenticación
+import { useAuth } from '../../context/AuthContext'; // Importar el contexto de autenticación
 
 const LoginForm = () => {
   const [usernameEmail, setUsernameEmail] = useState('');
@@ -38,7 +38,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/login', {
+      const response = await axios.post('http://localhost:3001/auth/login', {
         usernameEmail,
         password,
       });

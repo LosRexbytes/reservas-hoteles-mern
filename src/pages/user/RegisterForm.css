@@ -1,6 +1,6 @@
 /* Estilos generales para el formulario de registro */
 .register-container {
-  background-image: url('../pages/assets/registro3.jpg'); /* Cambia la ruta por la imagen que quieras usar */
+  background-image: url('./assets/registro3.jpg'); /* Cambia la ruta por la imagen que quieras usar */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

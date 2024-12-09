@@ -1,22 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './pages/LoginForm';        // Ruta hacia el formulario de login
-import RegisterForm from './pages/RegisterForm';  // Ruta hacia el formulario de registro
-import PasswordReset from './pages/PasswordReset'; // Ruta hacia el formulario de restablecimiento de contraseña
-import VerificationCode from './pages/VerificationCode'; // Ruta hacia el formulario de verificación de código
-import ReservasForm from './pages/ReservasForm'; // Ruta hacia el formulario de reservas
-import Bienvenida from './pages/Bienvenida';
-import BuscarHabitaciones from './pages/Buscarhabitaciones';
-import HabitacionLujo from './pages/HabitacionLujo';
-import HabitacionMatrimonial from './pages/HabitacionMatrimonial';
-import ReservaAceptada from './pages/ReservaAceptada';
-import VERHAB from './pages/VERHAB';
-import ADMINDASHBOARD from './pages/AdminDashboard';
-import HABITACIONESADMIN from './pages/ListaHabitaciones';
+import LoginForm from './pages/user/LoginForm';        // Ruta hacia el formulario de login
+import RegisterForm from './pages/user/RegisterForm';  // Ruta hacia el formulario de registro
+import PasswordReset from './pages/user/PasswordReset'; // Ruta hacia el formulario de restablecimiento de contraseña
+import VerificationCode from './pages/user/VerificationCode'; // Ruta hacia el formulario de verificación de código
+import ReservasForm from './pages/user/ReservasForm'; // Ruta hacia el formulario de reservas
+import Bienvenida from './pages/user/Bienvenida';
+import BuscarHabitaciones from './pages/user/Buscarhabitaciones';
+import HabitacionLujo from './pages/user/HabitacionLujo';
+import HabitacionMatrimonial from './pages/user/HabitacionMatrimonial';
+import ReservaAceptada from './pages/user/ReservaAceptada';
+import VERHAB from './pages/user/VERHAB';
+import ADMINDASHBOARD from './pages/admin/AdminDashboard';
 import './App.css';  // Importa los estilos generales de la aplicación
-import ListaHabitaciones from './pages/ListaHabitaciones';
+import Habitaciones from './pages/admin/Habitaciones';
 
-import HistorialReservas from './pages/HistorialReservas';
+import HistorialReservas from './pages/user/HistorialReservas';
 
 function App() {
   return (
@@ -50,17 +49,16 @@ function App() {
           {/* Ruta para el formulario de ver historial de habitaciones */}
           <Route path="/historial-habitaciones" element={<HistorialReservas />} />
 
+          {/* MAS Rutas */}
+          <Route path="/lujo" element={<HabitacionLujo />} />
+          <Route path="/matrimonial" element={<HabitacionMatrimonial />} />
+
+          {/* Ruta para cer la reserva aceptada */}
+          <Route path="/reservaAceptada" element={<ReservaAceptada />} />
 
           {/* Ruta para entrar al admin*/}
           <Route path="/admin-dashboard" element={<ADMINDASHBOARD />} />
-          <Route path="/habitaciones" element={<ListaHabitaciones />} />
-
-          <Route path="/lujo" element={<HabitacionLujo />} />
-          <Route path="/matrimonial" element={<HabitacionMatrimonial />} />
-          <Route path="/reservaAceptada" element={<ReservaAceptada />} />
-
-
-
+          <Route path="/admin-habitaciones" element={<Habitaciones />} />
 
         </Routes>
       </div>

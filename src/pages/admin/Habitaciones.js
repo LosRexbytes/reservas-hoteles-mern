@@ -8,7 +8,7 @@ const Habitaciones = () => {
 
   const fetchHabitaciones = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/habitacions');
+      const response = await axios.get('http://localhost:3001/rooms');
       console.log(response.data); // Inspecciona lo que devuelve la respuesta
       setHabitaciones(response.data);
     } catch (err) {

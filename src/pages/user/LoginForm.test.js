@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import LoginForm from './LoginForm';
-import { AuthProvider } from '../context/AuthContext';
+import { AuthProvider } from '../../context/AuthContext';
 
 // Test para verificar que el formulario de inicio de sesión se renderiza sin fallos
 test('renders LoginForm without crashing', () => {

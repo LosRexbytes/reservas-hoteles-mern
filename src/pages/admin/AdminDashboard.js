@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import './AdminDashboard.css';
 import userIcon from './assets/user-icon.png';
 import logo from './assets/LogoRisueños.jpeg'; // Importa la imagen del logo
-import { logout } from '../services/authService'; 
+import { logout } from '../../services/authService'; 
 import 'react-calendar/dist/Calendar.css'; 
 import bienvenid from './assets/bienvenid.jpg';
 
