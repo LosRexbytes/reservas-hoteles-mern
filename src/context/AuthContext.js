@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: false,
     role: '',
     username: '',
+    email: '',
   });
 
   return (

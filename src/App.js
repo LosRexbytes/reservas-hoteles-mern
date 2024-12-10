@@ -12,6 +12,7 @@ import HabitacionMatrimonial from './pages/user/HabitacionMatrimonial';
 import ReservaAceptada from './pages/user/ReservaAceptada';
 import VERHAB from './pages/user/VERHAB';
 import ADMINDASHBOARD from './pages/admin/AdminDashboard';
+import VerPerfil from './pages/user/verPerfil';
 import './App.css';  // Importa los estilos generales de la aplicación
 import Habitaciones from './pages/admin/Habitaciones';
 
@@ -24,6 +25,8 @@ function App() {
         <Routes>
           {/* Ruta predeterminada ("/") que carga la página de bienvenida */}
           <Route path="/" element={<Bienvenida />} />
+
+          <Route path="/ver-perfil" element={<VerPerfil />} />
 
           {/* Ruta para el formulario de inicio de sesión */}
           <Route path="/login" element={<LoginForm />} />
@@ -45,6 +48,8 @@ function App() {
 
           {/* Ruta para el formulario de ver habitaciones */}
           <Route path="/ver-hab" element={<VERHAB />} />
+
+
 
           {/* Ruta para el formulario de ver historial de habitaciones */}
           <Route path="/historial-habitaciones" element={<HistorialReservas />} />

@@ -39,9 +39,11 @@ const VERHAB= () => {
         <h1>Risueños - Reserva de Habitación</h1>
           <nav>
                 {username ? (
-                  <>
-                    <p className="welcome-text">Bienvenido, {username}</p>
-                  </>
+                <>
+                
+                <p className="welcome-text">{username}</p>
+                <button onClick={() => navigate('/ver-perfil')} className="auth-button">Ver perfil</button>
+                </>
 
                 ) : (
                   <div className="auth-buttons-container">

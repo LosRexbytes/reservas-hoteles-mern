@@ -94,7 +94,7 @@
 }
 
 .welcome-text {
-  color: white;               /* Color de texto blanco */
+  color: #FFFFFF;               /* Color de texto blanco */
   font-size: 1.3em;           /* Texto un 30% más grande que el tamaño por defecto */
   font-family: 'Arial', sans-serif; /* Tipo de letra a Arial o alguna sans-serif */
 }

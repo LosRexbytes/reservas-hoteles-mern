@@ -146,7 +146,12 @@ app.post('/auth/login', async (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    res.json({ username: user.username, role: user.role });
+    // Incluimos el email en la respuesta
+    res.json({
+      username: user.username,
+      email: user.email, // Agregamos el email a la respuesta
+      role: user.role,
+    });
   } catch (error) {
     console.error('Error en el servidor:', error);
     res.status(500).json({ message: 'Error del servidor' });

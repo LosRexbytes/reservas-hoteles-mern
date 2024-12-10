@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import hotelLogo from './assets/hotelLogo.jpeg'; 
 import './ReservaAceptada.css'; // Asegúrate de crear este archivo para los estilos
 
+
 const ReservaAceptada = () => {
   const navigate = useNavigate(); 
   const handleVolver = () => {
