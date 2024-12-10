@@ -50,7 +50,7 @@ const ResetPassword = () => {
 
     try {
       await axios.post(
-        `http://localhost:3001/auth/reset-password/${token}`,
+        `https://backend-reservas-mern.onrender.com/auth/reset-password/${token}`,
         { newPassword }
       );
       setMessage("Contraseña actualizada exitosamente.");

@@ -21,7 +21,7 @@ function PasswordReset() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/send-reset-link', { email });
+      const response = await axios.post('https://backend-reservas-mern.onrender.com/auth/send-reset-link', { email });
       setMessage('Se ha enviado un correo con el enlace para restablecer la contraseña.');
     } catch (error) {
       setError('Hubo un error al enviar el correo. Inténtalo nuevamente.');

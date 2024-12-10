@@ -15,7 +15,7 @@ import ReservaAceptada from './pages/user/ReservaAceptada.js';
 import VERHAB from './pages/user/VERHAB.js';
 import ADMINDASHBOARD from './pages/admin/AdminDashboard.js';
 import './App.css';  // Importa los estilos generales de la aplicación
-import Habitaciones from './pages/admin/Habitaciones.js';
+import AdminHabitaciones from './pages/admin/AdminHabitaciones.js';
 import HistorialReservas from './pages/user/HistorialReservas.js';
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
           <Route path="/matrimonial" element={<HabitacionMatrimonial />} />
           <Route path="/reservaAceptada" element={<ReservaAceptada />} />
           <Route path="/admin-dashboard" element={<ADMINDASHBOARD />} />
-          <Route path="/admin-habitaciones" element={<Habitaciones />} />
+          <Route path="/admin-habitaciones" element={<AdminHabitaciones />} />
         </Routes>
       </div>
     </Router>

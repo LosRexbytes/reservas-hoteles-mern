@@ -37,7 +37,7 @@ const AdminDashboard = () => {
   }, []);
 
   const handleViewHabitaciones = () => {
-    navigate('/habitaciones');
+    navigate('/admin-habitaciones');
   };
   const handleViewClientes = () => {
     navigate('/listaclientes');
