@@ -6,13 +6,15 @@ import dobleEstandar from './assets/dobleEstandar.jpg';
 import matrimonialJacuzzi from './assets/matrimonialJacuzzy.jpg';
 import matrimonial from './assets/matrimonial.jpg';
 import vistasUnicas from './assets/vistasUnicas.jpg';
+import { useAuth } from '../../context/AuthContext'; // Contexto de autenticación
+
 import './VERHAB.css';
 
 const VERHAB= () => {
 
-
-  const navigate = useNavigate(); // Para redirección
-
+  const navigate = useNavigate(); // Navegación
+  const { authData } = useAuth(); // Acceso al contexto de autenticación
+  const username = authData?.username;
   
   const handleLogin = () => {
     navigate('/login');
@@ -35,10 +37,19 @@ const VERHAB= () => {
       {/* Sección del encabezado */}
       <header className="header">
         <h1>Risueños - Reserva de Habitación</h1>
-        <nav>
-          <a href="/login" onClick={(e) => { e.preventDefault(); handleLogin(); }}>Iniciar Sesión</a>
-          <a href="/register" onClick={(e) => { e.preventDefault(); handleRegister(); }}>Registro</a>
-        </nav>
+          <nav>
+                {username ? (
+                  <>
+                    <p className="welcome-text">Bienvenido, {username}</p>
+                  </>
+
+                ) : (
+                  <div className="auth-buttons-container">
+                    <button onClick={() => navigate('/login')} className="auth-button">Iniciar sesión</button>
+                    <button onClick={() => navigate('/register')} className="auth-button">Registrarse</button>
+                  </div>
+                )}
+              </nav>
       </header>
 
       {/* Imagen de vistas únicas */}

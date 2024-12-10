@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext'; // Contexto de autenticación
 import hotelLogo from './assets/hotelLogo.jpeg';
 import jacuzziRoom from './assets/jacuzziRoom.jpg';
 import matrimonialRoom from './assets/matrimonialRoom.jpg';
@@ -7,13 +8,16 @@ import simpleRoom from './assets/simpleRoom.jpg';
 import doubleRoom from './assets/doubleRoom.jpg';
 import './Buscarhabitaciones.css';
 
-
 const Buscarhabitaciones = () => {
   const navigate = useNavigate();
+  const { authData } = useAuth(); // Acceso al contexto de autenticación
+
   const [selectedRoomType, setSelectedRoomType] = useState('');
   const [roomCount, setRoomCount] = useState(1); // Número de habitaciones
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
+
+   const username = authData?.username;
 
   // Datos de habitaciones según el tipo
   const roomTypes = {
@@ -35,12 +39,14 @@ const Buscarhabitaciones = () => {
     ],
   };
 
+  // Funciones para navegar
   const handleLogin = () => navigate('/login');
   const handleRegister = () => navigate('/register');
   const handlehabitacionlujo = () => navigate('/lujo');
   const handleVolver = () => navigate(-1);
   const handleVERHAB = () => navigate('/ver-hab');
 
+  // Funciones de manejo de inputs
   const handleRoomTypeChange = (e) => {
     setSelectedRoomType(e.target.value);
   };
@@ -90,15 +96,29 @@ const Buscarhabitaciones = () => {
 
   const today = new Date().toISOString().split('T')[0]; // Fecha actual
 
+  // Función para manejar el logout (deberás implementarla para limpiar el estado de username)
+  const handleLogout = () => {
+    setUsername(''); // Limpia el estado de username cuando el usuario cierra sesión
+  };
+
   return (
     <div className="buscarhabitaciones">
       <header className="headerBH">
         <img src={hotelLogo} alt="Hotel Logo" className="hotel-logo" />
         <h1>Descansa bajo las estrellas de los Andes!</h1>
-        <nav>
-          <a href="/login" onClick={(e) => { e.preventDefault(); handleLogin(); }}>Iniciar Sesión</a>
-          <a href="/register" onClick={(e) => { e.preventDefault(); handleRegister(); }}>Registro</a>
-        </nav>
+          <nav>
+            {username ? (
+              <>
+                <p className="welcome-text">Bienvenido, {username}</p>
+              </>
+
+            ) : (
+              <div className="auth-buttons-container">
+                <button onClick={() => navigate('/login')} className="auth-button">Iniciar sesión</button>
+                <button onClick={() => navigate('/register')} className="auth-button">Registrarse</button>
+              </div>
+            )}
+          </nav>
       </header>
 
       <section className="bannerBH">
@@ -161,6 +181,7 @@ const Buscarhabitaciones = () => {
           </div>
         ))}
       </section>
+
       <footer className="footer">
         <button className="button" onClick={handleVolver}>VOLVER</button>
         <button className="button primary" onClick={handleVERHAB}>VER HABITACIONES</button>

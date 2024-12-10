@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import habSimple from './assets/habSimples.jpg';
 import habDoble from './assets/habDobles.jpg';
 import habMatrimonial from './assets/habMatrimonial.jpg';
-import { useNavigate } from 'react-router-dom'; // Añadido useNavigate
 import './Bienvenida.css';
+import { useAuth } from '../../context/AuthContext'; // Contexto de autenticación
+import { useNavigate } from 'react-router-dom'; // Navegación entre rutas
+
 
 const Bienvenida = () => {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [guests, setGuests] = useState('');
+
+
+  const navigate = useNavigate(); // Navegación
+  const { authData } = useAuth(); // Acceso al contexto de autenticación
+  const username = authData?.username;
   
-  const navigate = useNavigate(); // Definido aquí
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,10 +46,19 @@ const Bienvenida = () => {
           <h1 className="main-title">Posada Risueños</h1>
           <h2 className="sub-title">Bienvenido a tu refugio Andino</h2>
         </div>
-        <nav>
-          <a href="/login" onClick={handleLogin}>Iniciar Sesión</a>
-          <a href="/register" onClick={handleRegister}>Registro</a>
-        </nav>
+          <nav>
+              {username ? (
+                <>
+                  <p className="welcome-text">Bienvenido, {username}</p>
+                </>
+
+              ) : (
+                <div className="auth-buttons-container">
+                  <button onClick={() => navigate('/login')} className="auth-button">Iniciar sesión</button>
+                  <button onClick={() => navigate('/register')} className="auth-button">Registrarse</button>
+                </div>
+              )}
+            </nav>
       </header>
 
       <div className="banner">
