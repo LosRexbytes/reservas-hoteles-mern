@@ -55,11 +55,6 @@ const Reservation = mongoose.model('Reservation', reservationSchema);
 app.get('/api/historial-habitaciones/:userId', async (req, res) => {
   const { userId } = req.params;
 
-  // Validar si el userId es un ObjectId válido
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ message: 'ID de usuario no válido' });
-  }
-
   try {
     // Encuentra todas las reservas relacionadas con este usuario
     const reservas = await Reservation.find({ user_id: userId })
@@ -71,8 +66,8 @@ app.get('/api/historial-habitaciones/:userId', async (req, res) => {
 
     res.status(200).json(reservas);
   } catch (error) {
-    console.error('Error al obtener el historial de reservas:', error);
-    res.status(500).json({ message: 'Error al cargar el historial de reservas' });
+    //console.error('Error al obtener el historial de reservas:', error);
+   //res.status(500).json({ message: 'Error al cargar el historial de reservas' });
   }
 });
 

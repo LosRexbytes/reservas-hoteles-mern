@@ -116,7 +116,6 @@ const Buscarhabitaciones = () => {
           <nav>
             {username ? (
               <>
-              
                 <p className="welcome-text">{username}</p>
                 <button onClick={() => navigate('/ver-perfil')} className="auth-button">Ver perfil</button>
                 </>

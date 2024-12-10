@@ -12,10 +12,12 @@ import './VERHAB.css';
 
 const VERHAB= () => {
 
+  
   const navigate = useNavigate(); // Navegación
   const { authData } = useAuth(); // Acceso al contexto de autenticación
   const username = authData?.username;
-  
+  const email = authData?.email || 'example@gmail.com';   
+
   const handleLogin = () => {
     navigate('/login');
   };
@@ -39,11 +41,10 @@ const VERHAB= () => {
         <h1>Risueños - Reserva de Habitación</h1>
           <nav>
                 {username ? (
-                <>
-                
-                <p className="welcome-text">{username}</p>
-                <button onClick={() => navigate('/ver-perfil')} className="auth-button">Ver perfil</button>
-                </>
+                  <>
+                  <p className="welcome-text">{username}</p>
+                  <button onClick={() => navigate('/ver-perfil')} className="auth-button">Ver perfil</button>
+                  </>
 
                 ) : (
                   <div className="auth-buttons-container">

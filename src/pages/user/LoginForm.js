@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'; // Importar useNavigate para red
 import { useAuth } from '../../context/AuthContext'; // Importar el contexto de autenticación
 
 const LoginForm = () => {
+
+  
   const [usernameEmail, setUsernameEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -46,14 +48,8 @@ const LoginForm = () => {
       setSuccessMessage(`Bienvenido ${response.data.username}`);
       setErrorMessage('');
 
-      console.log(response.data);
       // Guardar datos de autenticación en el contexto
-      setAuthData({
-        isAuthenticated: true,
-        role: response.data.role,
-        username: response.data.username,
-        email: response.data.email, // Ahora también guardamos el email
-      });
+      setAuthData({ isAuthenticated: true, role: response.data.role, username: response.data.username });
 
       // Redirigir según el rol
       if (response.data.role === 'admin') {

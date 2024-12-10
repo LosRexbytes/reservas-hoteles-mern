@@ -5,10 +5,11 @@ import './verPerfil.css';
 
 const VerPerfil = () => {
 
+  const { authData } = useAuth(); // Accede al estado global
+
   const username = authData?.username;
   const email = authData?.email || 'example@gmail.com';   
 
-  const { authData } = useAuth(); // Accede al estado global
 
   useEffect(() => {
     // Este efecto se puede usar para realizar tareas adicionales si es necesario
