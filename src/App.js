@@ -14,6 +14,7 @@ import VERHAB from './pages/user/VERHAB';
 import ADMINDASHBOARD from './pages/admin/AdminDashboard';
 import './App.css';  // Importa los estilos generales de la aplicación
 import Habitaciones from './pages/admin/Habitaciones';
+import CLIENTESADMIN from './pages/admin/ListaClientes';
 
 import HistorialReservas from './pages/user/HistorialReservas';
 
@@ -58,6 +59,7 @@ function App() {
 
           {/* Ruta para entrar al admin*/}
           <Route path="/admin-dashboard" element={<ADMINDASHBOARD />} />
+          <Route path="/listaclientes" element={<CLIENTESADMIN />} />
           <Route path="/admin-habitaciones" element={<Habitaciones />} />
 
         </Routes>

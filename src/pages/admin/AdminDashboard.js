@@ -39,6 +39,9 @@ const AdminDashboard = () => {
   const handleViewHabitaciones = () => {
     navigate('/habitaciones');
   };
+  const handleViewClientes = () => {
+    navigate('/listaclientes');
+  };
 
   const handleLogout = () => {
     logout() 
@@ -83,7 +86,7 @@ const AdminDashboard = () => {
         <ul>
           <li onClick={handleViewHabitaciones}>Habitaciones</li>
           <li>Reservas</li>
-          <li>Clientes</li>
+          <li onClick={handleViewClientes}>Clientes</li>
           <li>Configuraciones</li>
         </ul>
       </div>
