@@ -48,13 +48,8 @@ const LoginForm = () => {
       setSuccessMessage(`Bienvenido ${response.data.username}`);
       setErrorMessage('');
 
-      // Cambiar la línea de setAuthData
-      setAuthData({ 
-        isAuthenticated: true, 
-        role: response.data.role, 
-        username: response.data.username,
-        email: response.data.email  // Agregar esta línea para incluir el email
-      });
+      // Guardar datos de autenticación en el contexto
+      setAuthData({ isAuthenticated: true, role: response.data.role, username: response.data.username });
 
       // Redirigir según el rol
       if (response.data.role === 'admin') {
