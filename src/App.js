@@ -17,6 +17,7 @@ import ADMINDASHBOARD from './pages/admin/AdminDashboard.js';
 import './App.css';  // Importa los estilos generales de la aplicación
 import AdminHabitaciones from './pages/admin/AdminHabitaciones.js';
 import HistorialReservas from './pages/user/HistorialReservas.js';
+import CLIENTESADMIN from './pages/admin/ListaClientes';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/reservaAceptada" element={<ReservaAceptada />} />
           <Route path="/admin-dashboard" element={<ADMINDASHBOARD />} />
           <Route path="/admin-habitaciones" element={<AdminHabitaciones />} />
+          <Route path="/listaclientes" element={<CLIENTESADMIN />} />
         </Routes>
       </div>
     </Router>

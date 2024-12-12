@@ -12,7 +12,8 @@ const ListaClientes = () => {
   // Función para cargar usuarios desde el backend
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get('https://backend-reservas-mern.onrender.com/auth/users'); 
+      const response = await axios.get('http://localhost:3001/auth/users'); 
+      //const response = await axios.get('https://backend-reservas-mern.onrender.com/auth/users'); 
       setUsuarios(response.data);
       setLoading(false);
     } catch (err) {
@@ -30,7 +31,8 @@ const ListaClientes = () => {
   const eliminarUsuario = async (id) => {
     console.log("Eliminando usuario con ID:", id);  // Verificar el id
     try {
-      await axios.delete(`https://backend-reservas-mern.onrender.com/auth/delete/${id}`);
+      await axios.delete(`http://localhost:3001/auth/delete/${id}`);
+      //await axios.delete(`https://backend-reservas-mern.onrender.com/auth/delete/${id}`);
       setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario._id !== id));
     } catch (err) {
       console.error('Error al eliminar el usuario:', err);
