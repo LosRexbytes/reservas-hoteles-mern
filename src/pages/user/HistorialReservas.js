@@ -9,7 +9,7 @@ const HistorialReservas = () => {
     const userId = "id_del_usuario"; // Reemplaza esto por el ID del usuario actual
     const fetchHistorial = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/historial-habitaciones/${userId}`);
+        const response = await axios.get(`https://backend-reservas-mern.onrender.com/api/historial-habitaciones/${userId}`);
         setReservas(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error al cargar el historial de reservas');
