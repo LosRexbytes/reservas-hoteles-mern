@@ -1,27 +1,28 @@
-// VerPerfil.js
-import React, { useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext'; // Asegúrate de importar el hook de contexto
+import React from 'react'; // Cambiar useEffect por React
+import { useAuth } from '../../context/AuthContext';
 import './verPerfil.css';
 
 const VerPerfil = () => {
+  const { authData } = useAuth();
 
-  const { authData } = useAuth(); // Accede al estado global
-
-  const username = authData?.username;
-  const email = authData?.email || 'example@gmail.com';   
-
-
-  useEffect(() => {
-    // Este efecto se puede usar para realizar tareas adicionales si es necesario
-    // Por ejemplo, llamar a una API para obtener los detalles del usuario
-  }, []);
+  // Si no hay datos de autenticación, muestra un mensaje
+  if (!authData || !authData.isAuthenticated) {
+    return (
+      <div className="perfil-container">
+        <h1>Acceso Denegado</h1>
+        <p>Por favor, inicie sesión para ver su perfil</p>
+      </div>
+    );
+  }
 
   return (
     <div className="perfil-container">
       <h1>Perfil de Usuario</h1>
-      <p>Bienvenido al perfil de {username}</p>
-      <p>Correo electrónico: {email}</p>
-      {/* Aquí puedes agregar más información sobre el perfil */}
+      <div className="perfil-info">
+        <p><strong>Nombre de Usuario:</strong> {authData.username}</p>
+        <p><strong>Correo Electrónico:</strong> {authData.email}</p>
+        <p><strong>Rol:</strong> {authData.role}</p>
+      </div>
     </div>
   );
 };
