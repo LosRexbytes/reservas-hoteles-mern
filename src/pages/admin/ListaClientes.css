@@ -1,0 +1,100 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+  overflow-x: hidden; /* Previene el desbordamiento horizontal */
+}
+
+.containerC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  text-align: center;
+  overflow-x: hidden; /* Asegura que el contenido no se salga horizontalmente */
+}
+
+/* Banner */
+.bannerC {
+  width: 100%; /* Adapta el ancho al contenedor y evita desbordamiento */
+  background-color: #cbcaca;
+  color: rgb(0, 0, 0);
+  padding: 40px 0; /* Aumenta el padding para hacer el banner más alto */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Asegurarse de que esté encima de otros elementos */
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra sutil para destacar */
+  overflow: hidden; /* Evita contenido que sobresalga del banner */
+}
+
+.bannerC h1 {
+  margin: 0;
+  font-size: 3rem; /* Aumenta el tamaño del texto para hacerlo más prominente */
+  font-weight: bold; /* Resalta el texto */
+}
+
+/* Contenido principal */
+.contentC {
+  margin-top: 120px; /* Ajusta el espacio para evitar que el contenido se solape con el banner */
+  background: white;
+  padding: 40px; /* Aumenta el padding para más espacio dentro del contenido */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 1500px; /* Limita el ancho máximo */
+  width: 100%; /* Asegura que se adapte al tamaño del viewport */
+}
+
+/* Tabla */
+.table-container {
+  overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 30px 0; /* Aumenta el margen para separar la tabla del contenido */
+}
+
+th, td {
+  padding: 15px; /* Aumenta el padding de las celdas para hacer la tabla más espaciosa */
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #cbcaca;
+  font-size: 1.2rem; /* Aumenta el tamaño de fuente de los encabezados */
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 15px; /* Aumenta el tamaño del botón */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+/* Botón "Volver" */
+.back-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px; /* Aumenta el tamaño del botón */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.back-button:hover {
+  background-color: #2980b9;
+}
