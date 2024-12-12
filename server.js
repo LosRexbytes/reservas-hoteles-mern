@@ -143,7 +143,7 @@ app.post('/auth/login', async (req, res) => {
 
     // Incluimos el email en la respuesta
     res.json({
-      username: user.username,
+      username: user.username,  
       email: user.email, // Agregamos el email a la respuesta
       role: user.role,
     });

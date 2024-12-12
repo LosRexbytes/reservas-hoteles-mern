@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Contexto de autenticación
-
 import hotelLogo from './assets/hotelLogo.jpeg';
 import jacuzziRoom from './assets/jacuzziRoom.jpg';
 import matrimonialRoom from './assets/matrimonialRoom.jpg';
@@ -9,10 +8,8 @@ import simpleRoom from './assets/simpleRoom.jpg';
 import doubleRoom from './assets/doubleRoom.jpg';
 import './Buscarhabitaciones.css';
 
-
 const Buscarhabitaciones = () => {
-
-
+  
   const navigate = useNavigate();
   const { authData } = useAuth(); // Acceso al contexto de autenticación
 
@@ -22,9 +19,8 @@ const Buscarhabitaciones = () => {
   const [checkOutDate, setCheckOutDate] = useState('');
 
   //console.log(authData); // Verifica qué contiene el objeto authData
-
   const username = authData?.username;
-  const email = authData?.email || 'example@gmail.com';   
+  const email = authData?.email;
 
   // Datos de habitaciones según el tipo
   const roomTypes = {
